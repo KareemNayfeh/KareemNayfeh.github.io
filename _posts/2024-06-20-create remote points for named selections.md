@@ -8,7 +8,8 @@ namedSelections = DataModel.GetObjectsByName("Named Selections")[0].Children
 final = []
 
 for x in namedSelections:
-    if x.Name.StartsWith("bearing"): #filter which named selections you would like remote points for
+    #filter which named selections you would like remote points for
+    if x.Name.StartsWith("bearing"):
         final.append(x)
 
 rp = Model.RemotePoints
