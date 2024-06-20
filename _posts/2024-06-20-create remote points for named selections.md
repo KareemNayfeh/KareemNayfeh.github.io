@@ -2,7 +2,7 @@
 
 Below is a simple code which takes already existing named selections and creates a corresponding remote point.
 
-```py
+```python
 namedSelections = DataModel.GetObjectsByName("Named Selections")[0].Children
 
 final = []
