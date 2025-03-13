@@ -3,7 +3,7 @@
 
 Below is a simple ansys script written in python to export solutions as MP4 videos
 
-```python
+```py
 image_settings = Ansys.Mechanical.Graphics.GraphicsImageExportSettings()
 image_settings.CurrentGraphicsDisplay = True
 
