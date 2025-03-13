@@ -1,23 +1,26 @@
-## Create remote points for specific named selections in ANSYS Mechanical with python scripting
+## Exporting Solutions in Ansys as Videos
 
-Below is a simple code which takes already existing named selections and creates a corresponding remote point.
+
+Below is a simple ansys script written in python to export solutions as MP4 videos
 
 ```python
-namedSelections = DataModel.GetObjectsByName("Named Selections")[0].Children
+image_settings = Ansys.Mechanical.Graphics.GraphicsImageExportSettings()
+image_settings.CurrentGraphicsDisplay = True
 
-final = []
+fileLoc = r"""C:\Users\karee\ANSYS\videoDemo.""" 
+# videoDemo. is the prefix that all exported mp4's would have
 
-for x in namedSelections:
-    #filter which named selections you would like remote points for
-    if x.Name.StartsWith("bearing"):
-        final.append(x)
+# Getting an array of all solved solutions
+solutions = DataModel.GetObjectsByName("Solution")[0].Children
 
-rp = Model.RemotePoints
+# Video settings
+Graphics.ResultAnimationOptions.NumberOfFrames = 8
+Graphics.ResultAnimationOptions.Duration = Quantity(3,'s')
 
-for x in final:
-    newRP = rp.AddRemotePoint()
-    newRP.ScopingMethod= GeometryDefineByType.Component
-    newRP.Name = x.Name + r"""_rp"""
-    newRP.Location = x
-    newRP.PilotNodeAPDLName = newRP.Name
+# Looping through every solution excluding index 0 (solution information) and exporting it
+for x in list(solutions)[1:]:
+    x.RenameBasedOnDefinition()
+    x.ExportAnimation(fileLoc + x.Name.Replace(" ", "") + """.mp4""", GraphicsAnimationExportFormat.MP4)
+    Graphics.ExportImage(fileLoc + x.Name.Replace(" ", "") + "IMG", GraphicsImageExportFormat.PNG, image_settings)
+
 ```
