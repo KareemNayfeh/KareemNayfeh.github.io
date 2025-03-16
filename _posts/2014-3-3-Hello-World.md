@@ -1,7 +1,6 @@
 ---
 layout: post
 title: You're up and running!
-date: 3/16/2025
 published: false
 ---
 
